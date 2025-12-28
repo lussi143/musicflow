@@ -13,7 +13,7 @@ interface HomeViewProps {
 
 const HomeView: React.FC<HomeViewProps> = ({ tracks, onPlaylistSelect, onTrackSelect, onViewDetails }) => {
   const [activeCategory, setActiveCategory] = useState('All');
-  const categories = ['All', 'Pop', 'R&B', 'Hip Hop', 'Rock'];
+  const categories = ['All', 'Pop', 'R&B', 'Hip Hop', 'Rock', 'Electronic', 'Indie'];
 
   const filteredTracks = activeCategory === 'All' 
     ? tracks 
@@ -31,36 +31,41 @@ const HomeView: React.FC<HomeViewProps> = ({ tracks, onPlaylistSelect, onTrackSe
   return (
     <div className="space-y-16 md:space-y-24 animate-in fade-in duration-1000 relative z-10">
       
-      {/* Hero Section - Space reduced */}
-      <section className="flex flex-col items-center justify-center text-center py-4 md:py-10 px-4 max-w-5xl mx-auto">
+      {/* Hero Section */}
+      <section className="relative flex flex-col items-center justify-center text-center py-10 md:py-20 px-4 max-w-6xl mx-auto overflow-hidden">
+        
+        {/* Central 3D Cube Only */}
         <div className="scene">
           <div className="cube">
-            <div className="cube__face cube__face--front"><Music size={24} className="text-[#E879F9]" /></div>
-            <div className="cube__face cube__face--back"><Zap size={24} className="text-[#22D3EE]" /></div>
-            <div className="cube__face cube__face--right"><Disc size={24} className="text-[#E879F9]" /></div>
-            <div className="cube__face cube__face--left"><Mic size={24} className="text-[#22D3EE]" /></div>
-            <div className="cube__face cube__face--top"><Volume2 size={24} className="text-amber-400" /></div>
-            <div className="cube__face cube__face--bottom"><Globe size={24} className="text-amber-400" /></div>
+            <div className="cube__face cube__face--front"><Music size={64} className="text-[#E879F9]" /></div>
+            <div className="cube__face cube__face--back"><Zap size={64} className="text-[#22D3EE]" /></div>
+            <div className="cube__face cube__face--right"><Disc size={64} className="text-[#E879F9]" /></div>
+            <div className="cube__face cube__face--left"><Mic size={64} className="text-[#22D3EE]" /></div>
+            <div className="cube__face cube__face--top"><Volume2 size={64} className="text-amber-400" /></div>
+            <div className="cube__face cube__face--bottom"><Globe size={64} className="text-amber-400" /></div>
           </div>
         </div>
 
-        <h1 className="text-5xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter mb-6 md:mb-10 leading-[0.85] text-white">
-          The Sonic <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E879F9] to-[#22D3EE]">Dimension</span>
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter mb-8 md:mb-12 leading-[0.85] text-white">
+          Music Flow <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E879F9] to-[#22D3EE]">Dimension</span>
         </h1>
         <p className="text-zinc-400 text-base md:text-2xl mb-8 md:mb-12 font-medium leading-relaxed max-w-2xl px-4">
-          Where stadium energy meets digital serenity. Experience live music through a lens of pure aesthetic wonder.
+          Stadium energy meets digital serenity. Experience music through a lens of pure aesthetic wonder.
         </p>
         
-        <button className="glow-button bg-[#E879F9] text-white px-10 md:px-14 py-4 md:py-5 rounded-full text-base md:text-lg font-black shadow-[0_20px_60px_rgba(232,121,249,0.3)] hover:scale-105 transition-all active:scale-95">
-          Begin Discovery
-        </button>
+        <div className="relative group">
+           <div className="absolute inset-0 bg-gradient-to-r from-[#E879F9] to-[#22D3EE] blur-3xl opacity-20 group-hover:opacity-40 transition-opacity" />
+           <button className="relative glow-button bg-[#E879F9] text-white px-10 md:px-14 py-4 md:py-5 rounded-full text-base md:text-lg font-black shadow-[0_20px_60px_rgba(232,121,249,0.3)] hover:scale-105 transition-all active:scale-95">
+             Begin Discovery
+           </button>
+        </div>
       </section>
 
-      {/* Main Grid Section - Spacing between discovery and tools reduced */}
+      {/* Main Grid Section (Universal Tools/Tours) */}
       <section className="space-y-12 md:space-y-16">
         <div className="flex flex-col items-center text-center space-y-3 md:space-y-4">
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white">Universal Tours</h2>
-          <p className="text-zinc-500 font-medium text-base md:text-xl">The definitive schedule of world-class performances.</p>
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white uppercase">Universal Tools</h2>
+          <p className="text-zinc-500 font-medium text-base md:text-xl">Curated hits and live world-class performances.</p>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 px-4">
@@ -68,9 +73,9 @@ const HomeView: React.FC<HomeViewProps> = ({ tracks, onPlaylistSelect, onTrackSe
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 md:px-8 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold transition-all duration-300 ${
+              className={`px-6 md:px-10 py-2.5 md:py-3.5 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 ${
                 activeCategory === cat 
-                ? 'bg-white text-black shadow-lg shadow-white/10' 
+                ? 'bg-white text-black shadow-2xl scale-105' 
                 : 'bg-zinc-900/40 border border-white/5 text-zinc-500 hover:text-white hover:border-white/20'
               }`}
             >
@@ -79,7 +84,7 @@ const HomeView: React.FC<HomeViewProps> = ({ tracks, onPlaylistSelect, onTrackSe
           ))}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 max-w-[1400px] mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 max-w-[1400px] mx-auto px-4">
           {filteredTracks.map((track) => (
             <div 
               key={track.id}
@@ -96,39 +101,50 @@ const HomeView: React.FC<HomeViewProps> = ({ tracks, onPlaylistSelect, onTrackSe
                   <div className="bg-black/60 backdrop-blur-2xl text-[#E879F9] p-2 rounded-2xl border border-white/10 shadow-2xl">
                     {getGenreIcon(track.genre)}
                   </div>
-                  <span className="bg-white/10 backdrop-blur-xl text-white px-3 md:px-5 py-1.5 md:py-2 rounded-2xl text-[8px] md:text-[9px] font-bold uppercase tracking-widest border border-white/10">
+                  <span className="bg-white/10 backdrop-blur-xl text-white px-3 md:px-5 py-1.5 md:py-2 rounded-2xl text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] border border-white/10">
                     {track.genre || 'Live'}
                   </span>
                 </div>
+
+                <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                   <button 
+                     onClick={(e) => { e.stopPropagation(); onTrackSelect(track); }}
+                     className="w-12 h-12 rounded-full bg-[#E879F9] text-white flex items-center justify-center shadow-xl transform translate-y-20 group-hover:translate-y-0 transition-transform duration-500 hover:scale-110"
+                   >
+                     <Play size={20} fill="currentColor" className="ml-1" />
+                   </button>
+                </div>
               </div>
               
-              <div className="p-6 md:p-10 space-y-6 md:space-y-8 flex-1 flex flex-col">
+              <div className="p-8 md:p-10 space-y-6 md:space-y-8 flex-1 flex flex-col">
                 <div className="flex-1 cursor-pointer" onClick={() => onViewDetails(track)}>
                   <div className="flex flex-col gap-1 md:gap-2 mb-2 md:mb-4">
-                    <span className="text-[#E879F9] font-black text-[8px] md:text-[10px] uppercase tracking-widest">Global Headliner</span>
-                    <h3 className="text-2xl md:text-3xl font-black group-hover:text-[#E879F9] transition-colors leading-tight text-white">{track.artist}</h3>
+                    <span className="text-[#E879F9] font-black text-[8px] md:text-[10px] uppercase tracking-[0.5em]">Live Headline</span>
+                    <h3 className="text-2xl md:text-3xl font-black group-hover:text-[#E879F9] transition-colors leading-tight text-white uppercase tracking-tighter">{track.artist}</h3>
                     <p className="text-zinc-500 font-bold text-sm md:text-lg">{track.title}</p>
                   </div>
                   
-                  <div className="space-y-2 md:space-y-3 mt-4 md:mt-6">
-                    <div className="flex items-center gap-2 md:gap-3 text-zinc-400 font-semibold text-xs md:text-sm">
-                      <Calendar size={16} className="text-[#22D3EE]" />
-                      <span>{track.dateTime}</span>
+                  {track.dateTime && (
+                    <div className="space-y-2 md:space-y-3 mt-4 md:mt-6">
+                      <div className="flex items-center gap-2 md:gap-3 text-zinc-400 font-semibold text-xs md:text-sm">
+                        <Calendar size={16} className="text-[#22D3EE]" />
+                        <span>{track.dateTime.replace('T', ' ')}</span>
+                      </div>
+                      <div className="flex items-center gap-2 md:gap-3 text-zinc-400 font-semibold text-xs md:text-sm">
+                        <MapPin size={16} className="text-[#22D3EE]" />
+                        <span>{track.location || 'Global Hub'}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 md:gap-3 text-zinc-400 font-semibold text-xs md:text-sm">
-                      <MapPin size={16} className="text-[#22D3EE]" />
-                      <span>{track.location}</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
                 
                 <p className="text-zinc-500 text-sm md:text-base font-medium leading-relaxed line-clamp-2 italic">
-                  "{track.fullDescription}"
+                  "{track.fullDescription || 'Join the flow in this exclusive experience.'}"
                 </p>
 
                 <button 
                   onClick={() => onViewDetails(track)}
-                  className="w-full bg-white/5 border border-white/10 text-white py-4 md:py-5 rounded-[1.5rem] md:rounded-[2rem] font-bold text-xs md:text-sm flex items-center justify-center gap-2 md:gap-3 hover:bg-white hover:text-black transition-all"
+                  className="w-full bg-white/5 border border-white/10 text-white py-4 md:py-5 rounded-[1.5rem] md:rounded-[2rem] font-black text-[10px] md:text-xs uppercase tracking-[0.3em] flex items-center justify-center gap-2 md:gap-3 hover:bg-white hover:text-black transition-all"
                 >
                    Details & Passes
                 </button>
@@ -140,22 +156,22 @@ const HomeView: React.FC<HomeViewProps> = ({ tracks, onPlaylistSelect, onTrackSe
 
       {/* Featured Artist Profiles */}
       <section className="pb-20 md:pb-40 max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-12 md:mb-20 text-white text-center">Aesthetic Spotlight</h2>
+        <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-12 md:mb-20 text-white text-center uppercase">Aesthetic Spotlight</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {MOCK_PLAYLISTS.slice(0, 2).map((playlist) => (
             <div 
               key={playlist.id}
               onClick={() => onPlaylistSelect(playlist)}
-              className="bg-white/5 rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 border border-white/5 hover:border-[#E879F9]/20 transition-all group cursor-pointer"
+              className="bg-[#0A0A0B] rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 border border-white/5 hover:border-[#E879F9]/20 transition-all group cursor-pointer shadow-2xl"
             >
-              <div className="w-full md:w-56 h-48 md:h-56 rounded-2xl md:rounded-[2rem] overflow-hidden flex-shrink-0 shadow-2xl group-hover:scale-[1.03] transition-transform duration-700">
+              <div className="w-full md:w-56 h-48 md:h-56 rounded-2xl md:rounded-[2.5rem] overflow-hidden flex-shrink-0 shadow-2xl group-hover:scale-[1.03] transition-transform duration-700">
                 <img src={playlist.cover} className="w-full h-full object-cover" alt={playlist.name} />
               </div>
               <div className="flex-1 flex flex-col justify-center">
                 <span className="text-[#E879F9] text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] mb-2 md:mb-3">Artist Profile</span>
-                <h3 className="text-2xl md:text-3xl font-black mb-2 md:mb-3 text-white">{playlist.name}</h3>
-                <p className="text-zinc-400 text-xs md:text-sm font-medium mb-6 md:mb-8 leading-relaxed line-clamp-2">{playlist.description}</p>
-                <div className="flex items-center gap-2 md:gap-3 text-[#E879F9] font-black text-[10px] md:text-xs group-hover:translate-x-2 transition-transform uppercase tracking-widest">
+                <h3 className="text-2xl md:text-3xl font-black mb-2 md:mb-3 text-white uppercase tracking-tighter">{playlist.name}</h3>
+                <p className="text-zinc-400 text-xs md:text-sm font-medium mb-6 md:mb-8 leading-relaxed line-clamp-2 italic">{playlist.description}</p>
+                <div className="flex items-center gap-2 md:gap-3 text-[#E879F9] font-black text-[10px] md:text-xs group-hover:translate-x-2 transition-transform uppercase tracking-[0.3em]">
                   Explore Universe <ArrowRight size={14} />
                 </div>
               </div>

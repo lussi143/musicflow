@@ -58,106 +58,159 @@ export const MOCK_ARTISTS: ArtistProfile[] = [
 export const MOCK_TRACKS: Track[] = [
   { 
     id: 'sza-sos', 
-    title: 'SOS Tour Global', 
+    title: 'Kill Bill', 
     artist: 'SZA', 
     album: 'SOS', 
     cover: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=1200', 
-    duration: '1:45:00', 
-    genre: 'R&B / Soul',
+    duration: '2:33', 
+    genre: 'R&B',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+    fullDescription: 'I might kill my ex, not the best idea. SZA brings her chart-topping R&B sensation to the live stage.',
     location: 'Rod Laver Arena, Melbourne',
-    dateTime: 'Jan 10, 2025 • 8:00 PM',
-    fullDescription: 'Experience the raw vulnerability and genre-defying sound of SZA. The SOS Tour is a cinematic journey through the stages of a relationship, featuring nautical themes and incredible vocal performances.',
-    organizer: {
-      name: 'TDE Promotions',
-      avatar: 'https://picsum.photos/seed/tde/100/100',
-      bio: 'Top Dawg Entertainment - Home of the most authentic voices.'
-    }
+    dateTime: '2025-01-10T20:00'
   },
   { 
-    id: 'taylor-eras', 
-    title: 'The Eras Tour', 
+    id: 'taylor-cruel', 
+    title: 'Cruel Summer', 
     artist: 'Taylor Swift', 
-    album: 'Eras', 
+    album: 'Lover', 
     cover: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&q=80&w=1200', 
-    duration: '3:30:00', 
-    genre: 'Pop / Country',
+    duration: '2:58', 
+    genre: 'Pop',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    fullDescription: 'The anthem of a generation. Fever dream high in the quiet of the night.',
     location: 'Wembley Stadium, London',
-    dateTime: 'Aug 15, 2024 • 7:00 PM',
-    fullDescription: 'The biggest tour in history. A 3-hour journey through every musical era of Taylor Swift\'s career, featuring state-of-the-art stage design, dozens of dancers, and surprise acoustic songs.',
-    organizer: {
-      name: 'Taylor Swift Productions',
-      avatar: 'https://picsum.photos/seed/swift/100/100',
-      bio: 'Official production for the Eras Tour.'
-    }
+    dateTime: '2024-08-15T19:00'
   },
   { 
-    id: 'coldplay-spheres', 
-    title: 'Music of the Spheres World Tour', 
+    id: 'coldplay-yellow', 
+    title: 'Yellow', 
     artist: 'Coldplay', 
-    album: 'Music of the Spheres', 
+    album: 'Parachutes', 
     cover: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200', 
-    duration: '2:45:00', 
-    genre: 'Alt Rock / Pop',
+    duration: '4:29', 
+    genre: 'Rock',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+    fullDescription: 'Look at the stars, look how they shine for you.',
     location: 'Estádio do Morumbi, São Paulo',
-    dateTime: 'Oct 12, 2024 • 8:00 PM',
-    fullDescription: 'Coldplay\'s legendary eco-friendly tour continues. Expect LED wristbands, pyrotechnics, and a setlist that bridges the gap between their indie roots and pop stardom.',
-    organizer: {
-      name: 'Live Nation Brazil',
-      avatar: 'https://picsum.photos/seed/lvn/100/100',
-      bio: 'Bringing the world\'s biggest acts to Latin America.'
-    }
+    dateTime: '2024-10-12T20:00'
   },
   { 
-    id: 'ed-math', 
-    title: 'Mathematics Tour (+-=÷x)', 
+    id: 'ed-perfect', 
+    title: 'Perfect', 
     artist: 'Ed Sheeran', 
-    album: '=', 
+    album: '÷', 
     cover: 'https://images.unsplash.com/photo-1511735111819-9a3f7709049c?auto=format&fit=crop&q=80&w=1200', 
-    duration: '2:30:00', 
-    genre: 'Pop / Acoustic',
+    duration: '4:23', 
+    genre: 'Pop',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     location: 'Suncorp Stadium, Brisbane',
-    dateTime: 'Nov 04, 2024 • 7:00 PM',
-    fullDescription: 'The singer-songwriter returns with his signature loop pedal and a massive 360-degree rotating stage. An intimate experience in a stadium setting.',
-    organizer: {
-      name: 'Frontier Touring',
-      avatar: 'https://picsum.photos/seed/front/100/100',
-      bio: 'Leading Australasian concert promoter.'
-    }
+    dateTime: '2024-11-04T19:00'
   },
   { 
-    id: 'weeknd-dawn', 
-    title: 'After Hours Til Dawn Tour', 
+    id: 'weeknd-blinding', 
+    title: 'Blinding Lights', 
     artist: 'The Weeknd', 
-    album: 'Dawn FM', 
+    album: 'After Hours', 
     cover: 'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&q=80&w=1200', 
-    duration: '2:15:00', 
-    genre: 'R&B / Synthpop',
+    duration: '3:20', 
+    genre: 'Synthpop',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
     location: 'Stade de France, Paris',
-    dateTime: 'Dec 02, 2024 • 9:00 PM',
-    fullDescription: 'A cinematic odyssey through the dark and neon-soaked world of Abel Tesfaye. Featuring a giant moon and dystopian cityscapes.',
-    organizer: {
-      name: 'Universal Music France',
-      avatar: 'https://picsum.photos/seed/univ/100/100',
-      bio: 'Global leaders in music-based entertainment.'
-    }
+    dateTime: '2024-12-02T21:00'
   },
   { 
-    id: 'dua-optimism', 
-    title: 'Radical Optimism Tour', 
+    id: 'dua-levitating', 
+    title: 'Levitating', 
     artist: 'Dua Lipa', 
-    album: 'Radical Optimism', 
+    album: 'Future Nostalgia', 
     cover: 'https://images.unsplash.com/photo-1514525253361-bee8718a7439?auto=format&fit=crop&q=80&w=1200', 
-    duration: '1:55:00', 
-    genre: 'Dance-Pop',
+    duration: '3:23', 
+    genre: 'Pop',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
     location: 'The O2 Arena, London',
-    dateTime: 'Dec 18, 2024 • 8:30 PM',
-    fullDescription: 'Dua Lipa brings her infectious energy and disco-pop hits to London for a residency celebrating her latest era of radical optimism.',
-    organizer: {
-      name: 'Warner Records',
-      avatar: 'https://picsum.photos/seed/warner/100/100',
-      bio: 'Cultivating the future of global pop.'
-    }
+    dateTime: '2024-12-18T20:30'
   },
+  { 
+    id: 'harry-styles', 
+    title: 'As It Was', 
+    artist: 'Harry Styles', 
+    album: 'Harry\'s House', 
+    cover: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800', 
+    duration: '2:47', 
+    genre: 'Pop Rock',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'
+  },
+  { 
+    id: 'billie-birds', 
+    title: 'BIRDS OF A FEATHER', 
+    artist: 'Billie Eilish', 
+    album: 'HIT ME HARD AND SOFT', 
+    cover: 'https://images.unsplash.com/photo-1520127877030-94fa651d0b4f?auto=format&fit=crop&q=80&w=800', 
+    duration: '3:30', 
+    genre: 'Alt Pop',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'
+  },
+  { 
+    id: 'drake-rich', 
+    title: 'Rich Baby Daddy', 
+    artist: 'Drake', 
+    album: 'For All The Dogs', 
+    cover: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&q=80&w=800', 
+    duration: '5:19', 
+    genre: 'Hip Hop',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3'
+  },
+  { 
+    id: 'kendrick-not-like-us', 
+    title: 'Not Like Us', 
+    artist: 'Kendrick Lamar', 
+    album: 'Single', 
+    cover: 'https://images.unsplash.com/photo-1549834185-bd9f078a5dfe?auto=format&fit=crop&q=80&w=800', 
+    duration: '4:34', 
+    genre: 'Hip Hop',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3'
+  },
+  { 
+    id: 'bad-bunny-monaco', 
+    title: 'MONACO', 
+    artist: 'Bad Bunny', 
+    album: 'nadie sabe lo que va a pasar mañana', 
+    cover: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=800', 
+    duration: '4:27', 
+    genre: 'Reggaeton',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3'
+  },
+  { 
+    id: 'fred-again-adore-u', 
+    title: 'adore u', 
+    artist: 'Fred again..', 
+    album: 'Single', 
+    cover: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800', 
+    duration: '3:40', 
+    genre: 'Electronic',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3'
+  },
+  { 
+    id: 'mitski-my-love', 
+    title: 'My Love Mine All Mine', 
+    artist: 'Mitski', 
+    album: 'The Land Is Inhospitable', 
+    cover: 'https://images.unsplash.com/photo-1514525253361-bee8718a7439?auto=format&fit=crop&q=80&w=800', 
+    duration: '2:18', 
+    genre: 'Indie',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3'
+  },
+  { 
+    id: 'tate-mcrea-greedy', 
+    title: 'greedy', 
+    artist: 'Tate McRae', 
+    album: 'THINK LATER', 
+    cover: 'https://images.unsplash.com/photo-1511735111819-9a3f7709049c?auto=format&fit=crop&q=80&w=800', 
+    duration: '2:11', 
+    genre: 'Pop',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3'
+  }
 ];
 
 export const MOCK_PLAYLISTS: Playlist[] = [

@@ -8,6 +8,7 @@ export interface Track {
   duration: string;
   genre?: string;
   fullDescription?: string;
+  audioUrl?: string; // New field for audio playback
   organizer?: {
     name: string;
     avatar: string;
@@ -32,7 +33,7 @@ export enum ViewType {
   PLAYLISTS = 'PLAYLISTS',
   FAVORITES = 'FAVORITES',
   SEARCH = 'SEARCH',
-  SETTINGS = 'SETTINGS',
   PLAYLIST_DETAIL = 'PLAYLIST_DETAIL',
-  CREATE_EVENT = 'CREATE_EVENT'
+  CREATE_EVENT = 'CREATE_EVENT',
+  PROFILE = 'PROFILE'
 }

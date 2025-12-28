@@ -1,91 +1,145 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Track } from '../types';
 import { MOCK_TRACKS } from '../constants';
-import { Play, TrendingUp, Radio, Mic2, Star } from 'lucide-react';
+import { Play, TrendingUp, Radio, Mic2, Star, Disc, Music, Headphones, Zap, Heart, Search } from 'lucide-react';
 
 interface ExploreViewProps {
   onTrackSelect: (track: Track) => void;
 }
 
 const ExploreView: React.FC<ExploreViewProps> = ({ onTrackSelect }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('All');
+
   const genres = [
-    { name: 'Techno', color: 'bg-zinc-900 border-zinc-800 text-white', icon: Radio },
-    { name: 'Indie', color: 'bg-zinc-900 border-zinc-800 text-white', icon: TrendingUp },
-    { name: 'Soul', color: 'bg-zinc-900 border-zinc-800 text-white', icon: Mic2 },
-    { name: 'Nu-Jazz', color: 'bg-zinc-900 border-zinc-800 text-white', icon: Radio },
-    { name: 'Ambient', color: 'bg-zinc-900 border-zinc-800 text-white', icon: Star },
-    { name: 'Phonk', color: 'bg-zinc-900 border-zinc-800 text-white', icon: Mic2 },
+    { name: 'Pop', icon: Music },
+    { name: 'Hip Hop', icon: Mic2 },
+    { name: 'R&B', icon: Heart },
+    { name: 'Electronic', icon: Radio },
+    { name: 'Indie', icon: TrendingUp },
+    { name: 'Soul', icon: Headphones },
+    { name: 'Jazz', icon: Star },
+    { name: 'Rock', icon: Zap },
+    { name: 'Country', icon: Disc },
+    { name: 'Synthpop', icon: Radio },
   ];
 
+  const filteredTracks = MOCK_TRACKS.filter(track => {
+    const matchesSearch = track.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          track.artist.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesGenre = selectedGenre === 'All' || track.genre?.toLowerCase().includes(selectedGenre.toLowerCase());
+    return matchesSearch && matchesGenre;
+  });
+
   return (
-    <div className="space-y-20 pb-10 animate-in fade-in duration-500">
-      <section className="relative h-[450px] rounded-[3rem] overflow-hidden group shadow-2xl">
-        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=2000" className="absolute inset-0 w-full h-full object-cover brightness-[0.4] transition-transform duration-[4s] group-hover:scale-110" alt="Explore" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent p-16 flex flex-col justify-center">
+    <div className="space-y-20 pb-10 animate-in fade-in duration-700">
+      {/* Search Header */}
+      <section className="relative flex flex-col items-center">
+        <div className="w-full max-w-2xl relative">
+           <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-zinc-500" size={20} />
+           <input 
+             type="text" 
+             placeholder="Search songs, artists, dimensions..."
+             value={searchQuery}
+             onChange={(e) => setSearchQuery(e.target.value)}
+             className="w-full bg-[#0A0A0B] border border-white/5 rounded-full py-5 pl-16 pr-8 text-white focus:outline-none focus:border-[#E879F9]/50 transition-all shadow-2xl"
+           />
+        </div>
+      </section>
+
+      <section className="relative h-[450px] rounded-[3.5rem] overflow-hidden group shadow-2xl">
+        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=2000" className="absolute inset-0 w-full h-full object-cover brightness-[0.3] transition-transform duration-[4s] group-hover:scale-105" alt="Explore" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent p-12 md:p-16 flex flex-col justify-center">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-3 h-3 rounded-full bg-[#8B5CF6] animate-ping"></span>
-            <span className="text-white font-black text-xs uppercase tracking-[0.3em]">Live Recording Available</span>
+            <span className="w-3 h-3 rounded-full bg-[#E879F9] animate-ping"></span>
+            <span className="text-white font-black text-xs uppercase tracking-[0.4em]">Live Database Sync</span>
           </div>
-          <h1 className="text-6xl md:text-7xl font-black text-white mb-8 leading-[1.1] max-w-3xl">
-            Experience the <br/><span className="text-[#8B5CF6]">Sonic Underground</span>
+          <h1 className="text-6xl md:text-8xl font-black text-white mb-8 leading-[1] max-w-3xl tracking-tighter uppercase">
+            Sonic <br/><span className="text-[#E879F9]">Discoveries</span>
           </h1>
-          <p className="text-zinc-400 text-xl font-medium max-w-xl mb-12 leading-relaxed">
-            Unfiltered studio sessions and exclusive live tracks from the world's most innovative independent creators.
+          <p className="text-zinc-400 text-lg md:text-xl font-medium max-w-xl mb-12 leading-relaxed italic">
+            " Tap into the largest collection of independent hits and global superstars. Tap into the future of music Flow. "
           </p>
           <div className="flex items-center gap-6">
-            <button className="flex items-center gap-3 px-10 py-4 bg-[#8B5CF6] text-white rounded-full font-black hover:scale-105 hover:bg-[#7C3AED] transition-all shadow-[0_0_30px_rgba(139,92,246,0.3)]">
-              <Play size={20} fill="white" />
-              Listen Now
-            </button>
-            <button className="px-10 py-4 bg-white/10 backdrop-blur-md text-white border border-white/10 rounded-full font-black hover:bg-white/20 transition-all">
-              Save Playlist
+            <button className="flex items-center gap-3 px-10 py-4 bg-[#E879F9] text-white rounded-full font-black hover:scale-105 transition-all shadow-[0_0_40px_rgba(232,121,249,0.4)] uppercase text-xs tracking-widest">
+              <Play size={18} fill="white" />
+              Stream All
             </button>
           </div>
         </div>
       </section>
 
       <section>
-        <h2 className="text-3xl font-black mb-10 tracking-tight">Browse Genres</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+        <h2 className="text-3xl font-black mb-10 tracking-tight text-white uppercase flex items-center gap-4">
+          Browse Categories
+          <div className="h-px flex-1 bg-white/5" />
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div 
+            onClick={() => setSelectedGenre('All')}
+            className={`p-8 rounded-[2.5rem] border flex flex-col items-center justify-center gap-6 cursor-pointer transition-all hover:-translate-y-2 group ${selectedGenre === 'All' ? 'bg-white text-black border-white' : 'bg-zinc-900/40 border-white/5 text-white hover:border-[#E879F9]/40'}`}
+          >
+            <div className={`p-4 rounded-2xl border border-white/5 transition-colors ${selectedGenre === 'All' ? 'bg-zinc-100' : 'bg-[#18181B] group-hover:bg-[#E879F9]'}`}>
+              <Disc size={28} className={selectedGenre === 'All' ? 'text-black' : 'group-hover:text-white'} />
+            </div>
+            <span className="font-black text-[10px] tracking-widest uppercase">All Hits</span>
+          </div>
           {genres.map((genre) => (
             <div 
               key={genre.name} 
-              className={`p-8 rounded-[2.5rem] ${genre.color} border flex flex-col items-center justify-center gap-6 cursor-pointer transition-all hover:-translate-y-2 hover:border-[#8B5CF6]/40 hover:bg-[#18181B] group`}
+              onClick={() => setSelectedGenre(genre.name)}
+              className={`p-8 rounded-[2.5rem] border flex flex-col items-center justify-center gap-6 cursor-pointer transition-all hover:-translate-y-2 group ${selectedGenre === genre.name ? 'bg-white text-black border-white' : 'bg-zinc-900/40 border-white/5 text-white hover:border-[#E879F9]/40'}`}
             >
-              <div className="p-4 bg-[#18181B] rounded-2xl border border-white/5 group-hover:bg-[#8B5CF6] transition-colors">
-                <genre.icon size={32} className="group-hover:text-white transition-colors" />
+              <div className={`p-4 rounded-2xl border border-white/5 transition-colors ${selectedGenre === genre.name ? 'bg-zinc-100' : 'bg-[#18181B] group-hover:bg-[#E879F9]'}`}>
+                <genre.icon size={28} className={selectedGenre === genre.name ? 'text-black' : 'group-hover:text-white'} />
               </div>
-              <span className="font-black text-lg tracking-tight uppercase group-hover:text-[#8B5CF6] transition-colors">{genre.name}</span>
+              <span className="font-black text-[10px] tracking-widest uppercase">{genre.name}</span>
             </div>
           ))}
         </div>
       </section>
 
       <section>
-        <h2 className="text-3xl font-black mb-10 tracking-tight">Emerging Tracks</h2>
-        <div className="bg-[#18181B] rounded-[2.5rem] p-6 border border-white/5 shadow-2xl">
-          {MOCK_TRACKS.map((track, index) => (
-            <div 
-              key={track.id}
-              onClick={() => onTrackSelect(track)}
-              className="flex items-center gap-6 p-5 rounded-[1.5rem] hover:bg-white/5 transition-all cursor-pointer group border-b border-white/5 last:border-0"
-            >
-              <span className="w-8 text-zinc-600 font-black text-lg text-center group-hover:text-[#8B5CF6]">{String(index + 1).padStart(2, '0')}</span>
-              <img src={track.cover} className="w-16 h-16 rounded-2xl object-cover shadow-lg" alt={track.title} />
-              <div className="flex-1 min-w-0">
-                <h4 className="font-black text-lg truncate group-hover:text-[#8B5CF6] transition-colors leading-none mb-2">{track.title}</h4>
-                <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">{track.artist}</p>
-              </div>
-              <div className="hidden md:block text-sm font-bold text-zinc-500 tracking-wide uppercase">{track.album}</div>
-              <div className="flex items-center gap-8">
-                 <span className="text-sm font-black text-zinc-600 tabular-nums">{track.duration}</span>
-                 <button className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 opacity-0 group-hover:opacity-100 hover:border-[#8B5CF6] hover:text-[#8B5CF6] hover:bg-[#8B5CF6]/10 transition-all">
-                    <Play size={20} fill="currentColor" />
-                 </button>
-              </div>
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-3xl font-black tracking-tight text-white uppercase flex items-center gap-4 flex-1">
+            Global Hits Database
+            <div className="h-px flex-1 bg-white/5" />
+          </h2>
+        </div>
+        
+        <div className="bg-[#0A0A0B]/60 backdrop-blur-3xl rounded-[3rem] p-4 md:p-10 border border-white/5 shadow-2xl">
+          {filteredTracks.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+              {filteredTracks.map((track, index) => (
+                <div 
+                  key={track.id}
+                  onClick={() => onTrackSelect(track)}
+                  className="flex items-center gap-6 p-4 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group border border-transparent hover:border-white/10"
+                >
+                  <div className="relative w-16 h-16 rounded-xl overflow-hidden shadow-lg flex-shrink-0">
+                    <img src={track.cover} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={track.title} />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                       <Play size={16} fill="white" className="text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-base truncate text-white group-hover:text-[#E879F9] transition-colors mb-1">{track.title}</h4>
+                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{track.artist}</p>
+                  </div>
+                  <div className="text-[9px] font-black text-zinc-600 uppercase tracking-[0.2em] hidden sm:block">{track.genre}</div>
+                  <span className="text-xs font-black text-zinc-600 tabular-nums">{track.duration}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            <div className="py-20 text-center flex flex-col items-center">
+               <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-6 text-zinc-800">
+                  <Disc size={32} />
+               </div>
+               <p className="text-zinc-500 font-black text-[10px] uppercase tracking-[0.4em]">Zero matches in current dimension</p>
+            </div>
+          )}
         </div>
       </section>
     </div>

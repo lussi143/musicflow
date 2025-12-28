@@ -1,8 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ViewType } from '../types';
-import { Star, Menu, X, PlusCircle } from 'lucide-react';
-import { MOCK_TRACKS } from '../constants';
+import { Star, Menu, X, LogOut, ChevronDown, User, Music } from 'lucide-react';
+import { auth } from '../firebase';
+import { signOut, User as FirebaseUser } from 'firebase/auth';
+import { MOCK_ARTISTS } from '../constants';
 
 interface HeaderProps {
   currentView: ViewType;
@@ -11,115 +13,128 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const links = [
-    { id: ViewType.HOME, label: 'Discover' },
-    { id: ViewType.EXPLORE, label: 'Explore' },
-    { id: ViewType.PLAYLISTS, label: 'Artists' },
-    { id: ViewType.CREATE_EVENT, label: 'Create Event' },
-  ];
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
 
-  const featuredArtists = Array.from(new Set(MOCK_TRACKS.map(t => t.artist)));
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((u) => setUser(u));
+    return () => unsubscribe();
+  }, []);
 
   const handleNavClick = (viewId: ViewType) => {
     onViewChange(viewId);
     setIsMenuOpen(false);
+    setIsProfileOpen(false);
   };
+
+  const handleSignOut = () => signOut(auth);
+
+  // Combine artist names for a scrolling display of present artists
+  const artistString = MOCK_ARTISTS.map(a => a.name).join(' • ');
 
   return (
     <>
-      <div className="bg-[#E879F9] text-[#050505] py-1.5 px-4 md:px-6 overflow-hidden">
-        <div className="flex items-center justify-center gap-8 md:gap-12 whitespace-nowrap animate-[marquee_45s_linear_infinite]">
-          {[...featuredArtists, ...featuredArtists].map((artist, idx) => (
-            <div key={`${artist}-${idx}`} className="flex items-center gap-2 md:gap-4">
-              <Star size={8} fill="currentColor" className="opacity-80" />
-              <span className="text-[9px] md:text-[10px] font-extrabold uppercase tracking-[0.3em] md:tracking-[0.4em]">
-                {artist}
-              </span>
+      {/* Marquee Navigation displaying Artists */}
+      <div className="bg-[#E879F9] text-[#050505] py-2 px-6 overflow-hidden border-b border-black/10 relative">
+        <div className="marquee-track">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="flex items-center gap-12">
+              <div className="flex items-center gap-4">
+                <Star size={12} fill="currentColor" />
+                <span className="text-[11px] font-black uppercase tracking-[0.4em]">{artistString}</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <Music size={12} fill="currentColor" />
+                <span className="text-[11px] font-black uppercase tracking-[0.4em]">Live Performances • Trending Artists • Exclusive Drops</span>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      <header className="sticky top-0 z-[60] bg-[#050505]/80 backdrop-blur-3xl border-b border-white/5 px-4 md:px-12 h-16 md:h-20 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex-shrink-0">
-          <div 
-            onClick={() => handleNavClick(ViewType.HOME)} 
-            className="flex items-center cursor-pointer group"
-          >
-            <span className="text-xl md:text-2xl font-black tracking-tighter text-white hover:text-[#E879F9] transition-all duration-300 uppercase">
-              MusicFlow
-            </span>
-          </div>
+      <header className="sticky top-0 z-[60] bg-[#050505]/80 backdrop-blur-2xl border-b border-white/5 px-6 md:px-12 h-20 flex items-center justify-between">
+        <div onClick={() => handleNavClick(ViewType.HOME)} className="cursor-pointer group">
+          <span className="text-2xl font-black text-white uppercase tracking-tighter">
+            Music<span className="text-[#E879F9]">Flow</span>
+          </span>
         </div>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex flex-1 justify-center items-center gap-10">
-          {links.map((link) => (
+        <nav className="hidden md:flex flex-1 justify-center gap-10">
+          {[
+            { id: ViewType.HOME, label: 'Discover' },
+            { id: ViewType.EXPLORE, label: 'Explore' },
+            { id: ViewType.CREATE_EVENT, label: 'Create' }
+          ].map((link) => (
             <button
               key={link.id}
               onClick={() => handleNavClick(link.id)}
-              className={`text-sm font-bold tracking-tight transition-all duration-300 relative py-2 px-1 flex items-center gap-2 ${
-                currentView === link.id ? 'text-[#E879F9]' : 'text-zinc-400 hover:text-zinc-200'
-              }`}
+              className={`text-[10px] font-black uppercase tracking-widest transition-all relative ${currentView === link.id ? 'text-[#E879F9]' : 'text-zinc-500 hover:text-white'}`}
             >
-              {link.id === ViewType.CREATE_EVENT && <PlusCircle size={14} />}
               {link.label}
-              {currentView === link.id && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#E879F9] rounded-full shadow-[0_0_15px_#E879F9]" />
-              )}
+              {currentView === link.id && <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-[#E879F9]" />}
             </button>
           ))}
         </nav>
 
-        {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-6">
-          <button className="text-sm font-bold text-zinc-400 hover:text-white transition-all">Sign In</button>
-          <button className="glow-button bg-white text-black px-6 py-2 rounded-full text-xs font-extrabold shadow-xl hover:bg-[#E879F9] hover:text-white transition-all active:scale-95">
-            Join Now
-          </button>
+          {user && (
+            <div className="relative">
+              <button 
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex items-center gap-3 p-1 pr-4 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-all group"
+              >
+                <img 
+                  src={user.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`} 
+                  className="w-8 h-8 rounded-full border border-white/10 object-cover" 
+                  alt="" 
+                />
+                <span className="text-[10px] font-black text-white uppercase truncate max-w-[100px]">{user.displayName || 'Voyager'}</span>
+                <ChevronDown size={14} className={`text-zinc-500 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isProfileOpen && (
+                <div className="absolute top-full right-0 mt-3 w-48 bg-[#0A0A0B] border border-white/10 rounded-2xl shadow-2xl p-2 animate-in fade-in slide-in-from-top-2">
+                  <button 
+                    onClick={() => handleNavClick(ViewType.PROFILE)}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl transition-all font-black text-[10px] uppercase tracking-widest"
+                  >
+                    <User size={16} /> My Portal
+                  </button>
+                  <div className="h-px bg-white/5 my-1" />
+                  <button 
+                    onClick={handleSignOut}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-500/10 rounded-xl transition-all font-black text-[10px] uppercase tracking-widest"
+                  >
+                    <LogOut size={16} /> Disconnect
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <button 
-          className="md:hidden p-2 text-white"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
+        <button className="md:hidden p-2 text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </header>
 
-      {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-[55] bg-[#050505] pt-24 px-6 animate-in slide-in-from-top duration-300">
+        <div className="md:hidden fixed inset-0 z-[55] bg-[#050505] pt-24 px-8 animate-in slide-in-from-top">
           <div className="flex flex-col gap-8">
-            {links.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.id)}
-                className={`text-2xl font-black text-left uppercase tracking-tighter flex items-center gap-4 ${
-                  currentView === link.id ? 'text-[#E879F9]' : 'text-zinc-500'
-                }`}
-              >
-                {link.id === ViewType.CREATE_EVENT && <PlusCircle size={28} />}
-                {link.label}
+            {[
+              { id: ViewType.HOME, label: 'Discover' },
+              { id: ViewType.EXPLORE, label: 'Explore' },
+              { id: ViewType.CREATE_EVENT, label: 'Create' },
+              { id: ViewType.PROFILE, label: 'My Portal' }
+            ].map((v) => (
+              <button key={v.id} onClick={() => handleNavClick(v.id)} className={`text-4xl font-black uppercase tracking-tighter text-left ${currentView === v.id ? 'text-[#E879F9]' : 'text-zinc-500'}`}>
+                {v.label}
               </button>
             ))}
-            <div className="h-px bg-white/10 w-full my-4" />
-            <button className="text-xl font-bold text-white text-left">Sign In</button>
-            <button className="bg-[#E879F9] text-white px-8 py-4 rounded-2xl text-lg font-black shadow-2xl">
-              Join Now
-            </button>
+            <button onClick={handleSignOut} className="text-2xl font-black text-red-500 text-left uppercase mt-4">Disconnect</button>
           </div>
         </div>
       )}
-      
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
     </>
   );
 };
