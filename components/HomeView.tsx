@@ -1,22 +1,23 @@
 
 import React, { useState } from 'react';
-import { MOCK_PLAYLISTS, MOCK_TRACKS } from '../constants';
+import { MOCK_PLAYLISTS } from '../constants';
 import { Playlist, Track } from '../types';
 import { Play, Calendar, MapPin, ArrowRight, Music, Zap, Disc, Mic, Volume2, Globe } from 'lucide-react';
 
 interface HomeViewProps {
+  tracks: Track[];
   onPlaylistSelect: (playlist: Playlist) => void;
   onTrackSelect: (track: Track) => void;
   onViewDetails: (track: Track) => void;
 }
 
-const HomeView: React.FC<HomeViewProps> = ({ onPlaylistSelect, onTrackSelect, onViewDetails }) => {
+const HomeView: React.FC<HomeViewProps> = ({ tracks, onPlaylistSelect, onTrackSelect, onViewDetails }) => {
   const [activeCategory, setActiveCategory] = useState('All');
   const categories = ['All', 'Pop', 'R&B', 'Hip Hop', 'Rock'];
 
   const filteredTracks = activeCategory === 'All' 
-    ? MOCK_TRACKS 
-    : MOCK_TRACKS.filter(track => track.genre?.toLowerCase().includes(activeCategory.toLowerCase()));
+    ? tracks 
+    : tracks.filter(track => track.genre?.toLowerCase().includes(activeCategory.toLowerCase()));
 
   const getGenreIcon = (genre: string = '') => {
     const g = genre.toLowerCase();

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { ViewType } from '../types';
-import { Star, Menu, X } from 'lucide-react';
+import { Star, Menu, X, PlusCircle } from 'lucide-react';
 import { MOCK_TRACKS } from '../constants';
 
 interface HeaderProps {
@@ -15,6 +15,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => {
     { id: ViewType.HOME, label: 'Discover' },
     { id: ViewType.EXPLORE, label: 'Explore' },
     { id: ViewType.PLAYLISTS, label: 'Artists' },
+    { id: ViewType.CREATE_EVENT, label: 'Create Event' },
   ];
 
   const featuredArtists = Array.from(new Set(MOCK_TRACKS.map(t => t.artist)));
@@ -58,10 +59,11 @@ const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => {
             <button
               key={link.id}
               onClick={() => handleNavClick(link.id)}
-              className={`text-sm font-bold tracking-tight transition-all duration-300 relative py-2 px-1 ${
+              className={`text-sm font-bold tracking-tight transition-all duration-300 relative py-2 px-1 flex items-center gap-2 ${
                 currentView === link.id ? 'text-[#E879F9]' : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
+              {link.id === ViewType.CREATE_EVENT && <PlusCircle size={14} />}
               {link.label}
               {currentView === link.id && (
                 <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#E879F9] rounded-full shadow-[0_0_15px_#E879F9]" />
@@ -95,10 +97,11 @@ const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => {
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className={`text-2xl font-black text-left uppercase tracking-tighter ${
+                className={`text-2xl font-black text-left uppercase tracking-tighter flex items-center gap-4 ${
                   currentView === link.id ? 'text-[#E879F9]' : 'text-zinc-500'
                 }`}
               >
+                {link.id === ViewType.CREATE_EVENT && <PlusCircle size={28} />}
                 {link.label}
               </button>
             ))}

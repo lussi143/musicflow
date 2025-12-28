@@ -1,15 +1,17 @@
 
 import React, { useEffect, useState } from 'react';
-import { X, Calendar, MapPin, Share2, Heart, CheckCircle2 } from 'lucide-react';
+import { X, Calendar, MapPin, Heart, CheckCircle2, Trash2, Edit3 } from 'lucide-react';
 import { Track } from '../types';
 
 interface EventModalProps {
   isOpen: boolean;
   onClose: () => void;
   event: Track | null;
+  onDelete?: (eventId: string) => void;
+  onEdit?: (event: Track) => void;
 }
 
-const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event }) => {
+const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, onDelete, onEdit }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -37,6 +39,8 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event }) => {
   };
 
   if (!event) return null;
+
+  const isUserEvent = event.id.startsWith('user-event-');
 
   return (
     <div 
@@ -75,7 +79,7 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event }) => {
 
           <div className="md:w-7/12 p-8 md:p-14 md:overflow-y-auto custom-scrollbar flex flex-col bg-zinc-900/20">
             <div className="mb-10">
-              <span className="inline-block bg-[#8B5CF6]/10 text-[#8B5CF6] border border-[#8B5CF6]/20 px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest mb-6">
+              <span className="inline-block bg-[#E879F9]/10 text-[#E879F9] border border-[#E879F9]/20 px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest mb-6">
                 {event.genre || 'Live Event'}
               </span>
               <h2 id="modal-title" className="text-5xl md:text-6xl font-bold text-white leading-tight mb-8">
@@ -84,16 +88,18 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event }) => {
               
               <div className="space-y-6">
                 <div className="flex items-center gap-5">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-[#8B5CF6]">
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-[#E879F9]">
                     <Calendar size={22} />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mb-1">Schedule</span>
-                    <span className="text-base text-white font-medium">{event.dateTime || 'TBA'}</span>
+                    <span className="text-base text-white font-medium">
+                      {event.dateTime?.replace('T', ' ') || 'TBA'}
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-5">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-[#8B5CF6]">
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-[#E879F9]">
                     <MapPin size={22} />
                   </div>
                   <div className="flex flex-col">
@@ -124,14 +130,33 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event }) => {
               </div>
             )}
 
-            {/* Actions: Removed "Confirm Attendance" as requested */}
+            {/* Actions */}
             <div className="mt-auto pt-8 flex items-center gap-4 border-t border-white/10">
-              <button className="flex-1 bg-white/5 border border-white/10 text-white py-5 rounded-2xl font-bold text-base hover:bg-white/10 transition-all">
-                Share Event
-              </button>
-              <button className="p-5 bg-white/5 border border-white/10 text-[#8B5CF6] rounded-2xl hover:bg-[#8B5CF6]/10 transition-all">
-                <Heart size={24} />
-              </button>
+              {isUserEvent ? (
+                <>
+                  <button 
+                    onClick={() => onEdit?.(event)}
+                    className="flex-1 bg-white/5 border border-white/10 text-white py-5 rounded-2xl font-bold text-base hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                  >
+                    <Edit3 size={18} /> Edit Experience
+                  </button>
+                  <button 
+                    onClick={() => onDelete?.(event.id)}
+                    className="flex-1 bg-red-500/10 border border-red-500/20 text-red-500 py-5 rounded-2xl font-bold text-base hover:bg-red-500 hover:text-white transition-all flex items-center justify-center gap-2"
+                  >
+                    <Trash2 size={18} /> Delete
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className="flex-1 bg-white/5 border border-white/10 text-white py-5 rounded-2xl font-bold text-base hover:bg-white/10 transition-all">
+                    Share Event
+                  </button>
+                  <button className="p-5 bg-white/5 border border-white/10 text-[#E879F9] rounded-2xl hover:bg-[#E879F9]/10 transition-all">
+                    <Heart size={24} />
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
